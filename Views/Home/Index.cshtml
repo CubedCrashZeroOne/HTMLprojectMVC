@@ -1,0 +1,85 @@
+﻿@using HTMLprojectMVC.Models.Context.Entities;
+@using System.Collections.Generic;
+@using System.Linq;
+@model (List<Group> groups, List<Student> students)
+
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <style>
+        div {
+            cursor: default;
+        }
+
+        form {
+            border: thin;
+            margin: 10px 10px 10px 10px;
+        }
+
+        .group {
+            display: inline-block;
+            font-size: large;
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .outside {
+            border: solid;
+        }
+
+        img {
+            height: 220px;
+            width: 500px;
+        }
+
+        .title {
+            display: inline-block;
+            font-size: 80px;
+            font-family: Impact;
+            font-weight: bold;
+            vertical-align: top;
+            margin-top: 60px;
+            margin-left: 30px;
+        }
+
+        .stud {
+            margin-left: 10px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="outside">
+        <img src="https://habrastorage.org/getpro/habr/post_images/4a3/695/122/4a3695122ad33e01b2371daf317fa9cb.jpg">
+        <span class="title">Списки студентов</span>
+        <form method="post" action="home">
+            <div class="outside">
+                @{ int i = 1;}
+                @foreach (var g in Model.groups)
+                {
+                    var list = Model.students.Where(s => s.GroupRefId == g.Id);
+                    <div>
+                        <span class="group">@(i++) - @g.Name (@list.Count())</span>
+                        @Html.ActionLink("Добавить студента", "Add", "Home", routeValues: null)
+                    </div>
+
+                    foreach (var s in list)
+                    {
+                        <div class="stud">
+                            <span>@s.LastName @s.FirstName @(s.MiddleName??"")</span>
+                            @Html.ActionLink("Редактировать", "Add", "Home", routeValues: new { studentId = s.Id })
+                            @Html.ActionLink("Удалить", "Delete", "Home", routeValues: new { studentId = s.Id })
+                        </div>
+
+                    }
+                }
+
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+﻿@using HTMLprojectMVC.Models.Context.Entities;
+@using System.Collections.Generic;
+@using System.Linq;
+@model (int studentId, List<Group> groups, List<Student> students, bool error)
+
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <style>
+        div {
+            cursor: default;
+        }
+
+        form {
+            border: solid;
+            margin: 10px 10px 10px 10px;
+        }
+
+        button{
+            margin: 10px 10px 10px 10px;
+        }
+
+        .outside {
+            border: solid;
+        }
+
+        img {
+            height: 220px;
+            width: 500px;
+        }
+
+        .title {
+            display: inline-block;
+            font-size: 80px;
+            font-family: Impact;
+            font-weight: bold;
+            vertical-align: top;
+            margin-top: 60px;
+            margin-left: 30px;
+        }
+
+        .field {
+            display: inline-block;
+            margin: 10px 10px 10px 10px;
+        }
+
+        .stud {
+            font-size: medium;
+            font-weight: bold;
+            margin-left: 10px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="outside">
+        <img src="https://habrastorage.org/getpro/habr/post_images/4a3/695/122/4a3695122ad33e01b2371daf317fa9cb.jpg">
+        <span class="title">Списки студентов</span>
+        <form method="post" action="AddConfirm">
+            <div>
+                <div class="stud">Студент</div>
+                <div>
+                    <input type="hidden" name="studentId" value="@Model.studentId" />
+                    @{ var student = Model.students.FirstOrDefault(s => s.Id == Model.studentId);}
+                    <span class="field">Фио:</span>
+                    <input id="namebox" type="text" name="names"
+                           value="@(student == null ? "" : $"{student.LastName} {student.FirstName} {student.MiddleName??""}")">
+                    @if (Model.error)
+                    {
+                        <span style="color: red;">ФИО студента не может быть пустым</span>
+                    }
+                </div>
+                <div>
+                    <span class="field">Группа:</span>
+                    <select id="groupbox" name="groupId">
+                        @{ int i = 0;}
+                        @foreach (var g in Model.groups)
+                        {
+                            <option value="@(Model.groups[i++].Id)">@g.Name</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit">Сохранить (это эстетичная кнопка)</button>
+                @Html.ActionLink("Отмена", "Index", "Home")
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

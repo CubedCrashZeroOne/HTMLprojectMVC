@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\PETROS.NOWHERE\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\PETROS.NOWHERE\\.nuget\\packages"
+    ]
+  }
+}
